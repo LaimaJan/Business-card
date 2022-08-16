@@ -66,8 +66,7 @@ function submitData(event) {
 	const imgFullNameJobDiv = generateObjectElement("div", "imgFullNameJobDiv");
 	imgTextDiv.appendChild(imgFullNameJobDiv);
 
-	const img = document.createElement("img");
-	img.classList.add("profile-img");
+	const img = generateObjectElement("img", "profile-img");
 	img.src = "images/Ellipse2.png";
 	imgFullNameJobDiv.appendChild(img);
 
@@ -83,8 +82,7 @@ function submitData(event) {
 	nameJob.appendChild(generateObjectElement("p", "jobTitle", formDataObj.job));
 
 	// creating div for email/phone/address
-	const infoDiv = document.createElement("div");
-	infoDiv.classList.add("infoDiv");
+	const infoDiv = generateObjectElement("div", "infoDiv");
 	imgTextDiv.appendChild(infoDiv);
 
 	infoDiv.appendChild(generateObjectElement("p", "email", formDataObj.email));
