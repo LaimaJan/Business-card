@@ -15,25 +15,6 @@ const isFormValid = () => {
 	return true;
 };
 
-// function validateForm() {
-// 	let a = document.forms["Form"]["fullName"].value;
-// 	let b = document.forms["Form"]["email"].value;
-// 	let c = document.forms["Form"]["phone"].value;
-// 	let d = document.forms["Form"]["address"].value;
-// 	let e = document.forms["Form"]["job"].value;
-// 	if (
-// 		(a == null || a == "",
-// 		b == null || b == "",
-// 		c == null || c == "",
-// 		d == null || d == "",
-// 		e == null || e == "")
-// 	) {
-// 		return false;
-// 	} else {
-// 		return true;
-// 	}
-// }
-
 form.addEventListener("submit", submitData);
 
 function submitData(event) {
@@ -52,6 +33,24 @@ function submitData(event) {
 	console.log(formDataObj);
 
 	window.localStorage.setItem("formDataObj", JSON.stringify(formDataObj));
+
+	displayBusinessCard();
+}
+
+function displayBusinessCard() {
+	const card = document.querySelector(".our-published-form");
+	if (card !== null) {
+		card.remove();
+	}
+
+	// retrieving our objects from localStorage
+	const retrieveObject = localStorage.getItem("formDataObj");
+	if (retrieveObject === null) {
+		return;
+	}
+
+	const ourObject = JSON.parse(retrieveObject);
+	console.log(retrieveObject);
 
 	// creating our card with input fields info
 	const ourPublishedForm = generateObjectElement("div", "our-published-form");
@@ -75,27 +74,25 @@ function submitData(event) {
 	imgFullNameJobDiv.appendChild(nameJob);
 
 	nameJob.appendChild(
-		generateObjectElement("p", "fullName", formDataObj.fullName)
+		generateObjectElement("p", "fullName", ourObject.fullName)
 	);
 
 	// creating p for job title
-	nameJob.appendChild(generateObjectElement("p", "jobTitle", formDataObj.job));
+	nameJob.appendChild(generateObjectElement("p", "jobTitle", ourObject.job));
 
 	// creating div for email/phone/address
 	const infoDiv = generateObjectElement("div", "infoDiv");
 	imgTextDiv.appendChild(infoDiv);
 
-	infoDiv.appendChild(generateObjectElement("p", "email", formDataObj.email));
+	infoDiv.appendChild(generateObjectElement("p", "email", ourObject.email));
 
 	// creating <p> for phone number
 	infoDiv.appendChild(
-		generateObjectElement("p", "phoneNumber", formDataObj.phone)
+		generateObjectElement("p", "phoneNumber", ourObject.phone)
 	);
 
 	// creating <p> for address
-	infoDiv.appendChild(
-		generateObjectElement("p", "address", formDataObj.address)
-	);
+	infoDiv.appendChild(generateObjectElement("p", "address", ourObject.address));
 
 	function generateObjectElement(selector, className, text) {
 		const element = document.createElement(selector);
@@ -108,3 +105,7 @@ function submitData(event) {
 		return element;
 	}
 }
+
+window.addEventListener("load", (event) => {
+	displayBusinessCard();
+});
